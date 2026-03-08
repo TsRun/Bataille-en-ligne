@@ -87,7 +87,7 @@ Quand les deux cartes retournées ont la **même valeur** :
 - [x] Animation de retournement de carte : flip 3D (rotateY 0° → 180°) au moment où la carte est révélée
 - [x] Animation de déplacement : les cartes gagnées "glissent" vers la pile du vainqueur
 - [x] Animation de bataille : les cartes cachées se posent une par une avec un léger délai entre chaque
-- [ ] Effet visuel distinct pour signaler une "Bataille !" (flash, shake, ou texte animé au centre)
+- [x] Effet visuel distinct pour signaler une "Bataille !" (flash, shake, ou texte animé au centre)
 - [ ] Animation de fin de partie : confettis ou effet de victoire/défaite
 - [ ] Indicateur visuel quand l'adversaire a cliqué "Retourner" (ex: card qui tremble sur sa pile)
 

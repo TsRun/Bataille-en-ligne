@@ -35,6 +35,34 @@ function BattlePlacingCards() {
   )
 }
 
+function BattleFlash() {
+  return (
+    <motion.div
+      className="absolute inset-0 z-40 flex items-center justify-center pointer-events-none"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.15 }}
+    >
+      <motion.div
+        className="absolute inset-0 bg-red-600/30"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: [0, 1, 0.4] }}
+        transition={{ duration: 0.5 }}
+      />
+      <motion.p
+        className="relative text-yellow-300 font-black text-6xl tracking-widest z-10 text-center"
+        style={{ textShadow: '0 0 40px rgba(255,180,0,0.9), 0 0 80px rgba(255,100,0,0.6)' }}
+        initial={{ scale: 0.1, opacity: 0, rotateZ: -8 }}
+        animate={{ scale: [0.1, 1.5, 1.15], opacity: [0, 1, 1], rotateZ: [-8, 3, 0] }}
+        transition={{ duration: 0.55, ease: 'backOut' }}
+      >
+        ⚔ BATAILLE !
+      </motion.p>
+    </motion.div>
+  )
+}
+
 function DealAnimation({ onComplete }) {
   useEffect(() => {
     const timer = setTimeout(onComplete, 1900)
@@ -86,6 +114,7 @@ export default function GameTable() {
   const [flipKey, setFlipKey] = useState(0)
   const [slideDir, setSlideDir] = useState(0) // -1 = up (opponent wins), 1 = down (I win), 0 = none
   const [placingBattle, setPlacingBattle] = useState(false)
+  const [showBattleAlert, setShowBattleAlert] = useState(false)
   const { state, flipCard } = useGame()
 
   // Unified sequencing effect: placing → flip → slide
@@ -97,16 +126,20 @@ export default function GameTable() {
     const flipDelay = isBattleRound ? BATTLE_PLACE_DURATION : 0
     const slideDelay = flipDelay + 750
 
+    const timers = []
+
     if (isBattleRound) {
       setPlacingBattle(true)
+      setShowBattleAlert(true)
+      const tAlert = setTimeout(() => setShowBattleAlert(false), 900)
+      timers.push(tAlert)
     }
 
     const t1 = setTimeout(() => {
       setPlacingBattle(false)
       setFlipKey((k) => k + 1)
     }, flipDelay)
-
-    const timers = [t1]
+    timers.push(t1)
 
     if (state.lastResult.winnerId) {
       const winnerId = state.lastResult.winnerId
@@ -154,6 +187,10 @@ export default function GameTable() {
 
       <AnimatePresence>
         {isDealing && <DealAnimation onComplete={handleDealDone} />}
+      </AnimatePresence>
+
+      <AnimatePresence>
+        {showBattleAlert && <BattleFlash key="battle-flash" />}
       </AnimatePresence>
 
       {/* Opponent area */}

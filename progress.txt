@@ -94,3 +94,15 @@
 
 **Build :** `vite build` ✓ (464 modules, 0 erreurs)
 **Tests :** 18/18 ✓
+
+## Session 9 — 2026-03-08
+
+### Task: Phase 4 — Effet visuel "Bataille !" (flash + texte animé)
+
+**Réalisé :**
+- `src/components/GameTable.jsx` : ajout du composant `BattleFlash` — overlay rouge semi-transparent (`bg-red-600/30`) + grand texte "⚔ BATAILLE !" (text-6xl, font-black, glow jaune/orange via `textShadow`) qui surgit avec scale 0.1→1.5→1.15 et rotation, via Framer Motion `backOut`.
+- Ajout du state `showBattleAlert` : déclenché à `true` au début de chaque bataille, auto-dismissed après 900 ms via `setTimeout`.
+- Rendu via `<AnimatePresence>` avec exit fade-out fluide.
+- Réorganisation du tableau `timers` dans l'useEffect pour regrouper tous les timers proprement.
+
+**Build :** `vite build` ✓ (464 modules, 0 erreurs)
