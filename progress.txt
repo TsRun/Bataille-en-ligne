@@ -129,3 +129,15 @@
 
 **Build :** `vite build` ✓ (464 modules, 0 erreurs)
 **Tests :** 18/18 ✓
+
+## Session 12 — 2026-03-08
+
+### Task: Phase 5 — Noms des joueurs (saisi à l'entrée, affiché sur la table)
+
+**Réalisé :**
+- La saisie du nom et la transmission côté serveur étaient déjà en place (HomeScreen, GameContext, game.js, serializeState).
+- `src/components/GameTable.jsx` : correction du label de la carte du joueur dans la zone centrale — `"Vous"` (hardcodé) remplacé par `me?.name ?? 'Vous'`, cohérent avec le reste de la table.
+- `src/screens/WaitingScreen.jsx` : ajout d'un message de bienvenue personnalisé `"Bonjour, {myName} !"` (en jaune, visible uniquement si le nom est défini) au-dessus du texte d'attente.
+
+**Build :** `vite build` ✓ (464 modules, 0 erreurs)
+**Tests :** 18/18 ✓

@@ -4,7 +4,7 @@ import { useGame } from '../context/GameContext'
 
 export default function WaitingScreen() {
   const { state } = useGame()
-  const { roomId } = state
+  const { roomId, myName } = state
   const [copied, setCopied] = useState(false)
 
   const handleCopy = () => {
@@ -43,6 +43,9 @@ export default function WaitingScreen() {
           </motion.div>
         </div>
 
+        {myName && (
+          <p className="text-yellow-300 font-semibold text-lg mb-3">Bonjour, {myName} !</p>
+        )}
         <motion.h2
           className="text-white text-2xl font-bold mb-2"
           animate={{ opacity: [1, 0.4, 1] }}

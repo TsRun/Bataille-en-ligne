@@ -93,7 +93,7 @@ Quand les deux cartes retournées ont la **même valeur** :
 
 ## Phase 5 : Polish et UX
 
-- [ ] Ajouter les noms des joueurs (saisi à l'entrée, affiché sur la table)
+- [x] Ajouter les noms des joueurs (saisi à l'entrée, affiché sur la table)
 - [ ] Afficher l'historique des 5 derniers tours dans un bandeau latéral (ex: "Tour 12 - Bataille ! +10 cartes")
 - [ ] Afficher un message de résultat clair sur la carte gagnante/perdante avant qu'elles bougent
 - [ ] Responsive design : fonctionne sur mobile et desktop

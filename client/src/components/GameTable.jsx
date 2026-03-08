@@ -264,7 +264,7 @@ export default function GameTable() {
                   <span
                     className={`text-xs font-semibold ${iWon ? 'text-yellow-400' : 'text-green-300'}`}
                   >
-                    {iWon ? '🏆 ' : ''}Vous
+                    {iWon ? '🏆 ' : ''}{me?.name ?? 'Vous'}
                   </span>
                 </div>
               </motion.div>
