@@ -205,7 +205,14 @@ export default function GameTable() {
           )}
         </div>
         <div className="relative">
-          <Card faceDown />
+          <motion.div
+            animate={opponentReady
+              ? { rotateZ: [0, -6, 6, -5, 5, -3, 3, 0], transition: { duration: 0.5, repeat: Infinity, repeatDelay: 0.8 } }
+              : { rotateZ: 0 }
+            }
+          >
+            <Card faceDown />
+          </motion.div>
           {opponentReady && (
             <span className="absolute -top-1 -right-1 flex h-3 w-3">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75" />

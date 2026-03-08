@@ -119,3 +119,13 @@
 
 **Build :** `vite build` ✓ (464 modules, 0 erreurs)
 **Tests :** 18/18 ✓
+
+## Session 11 — 2026-03-08
+
+### Task: Phase 4 — Indicateur visuel quand l'adversaire a cliqué "Retourner"
+
+**Réalisé :**
+- `src/components/GameTable.jsx` : la carte face cachée de l'adversaire est wrappée dans un `motion.div`. Quand `opponentReady` est `true`, la carte tremble en boucle via une animation `rotateZ` keyframes (`[0, -6, 6, -5, 5, -3, 3, 0]`, durée 0.5 s, répétée toutes les 1.3 s). Quand `opponentReady` repasse à `false`, la rotation revient à 0. Le badge de ping jaune existant est conservé.
+
+**Build :** `vite build` ✓ (464 modules, 0 erreurs)
+**Tests :** 18/18 ✓
