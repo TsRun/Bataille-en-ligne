@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import Card from './Card'
+import Card, { FlippingCard } from './Card'
 import { useGame } from '../context/GameContext'
 
 function DealAnimation({ onComplete }) {
@@ -49,7 +49,12 @@ function DealAnimation({ onComplete }) {
 export default function GameTable() {
   const [isDealing, setIsDealing] = useState(true)
   const handleDealDone = useCallback(() => setIsDealing(false), [])
+  const [flipKey, setFlipKey] = useState(0)
   const { state, flipCard } = useGame()
+
+  useEffect(() => {
+    if (state.lastResult) setFlipKey((k) => k + 1)
+  }, [state.lastResult])
   const { gameState, myId, opponentReady, myFlipped, lastResult } = state
 
   if (!gameState) return null
@@ -122,7 +127,7 @@ export default function GameTable() {
           <>
             <div className="flex gap-6 items-end">
               <div className="flex flex-col items-center gap-1">
-                <Card card={opponentCard} highlight={opponentWon} />
+                <FlippingCard key={`opp-${flipKey}`} card={opponentCard} highlight={opponentWon} />
                 <span
                   className={`text-xs font-semibold ${opponentWon ? 'text-yellow-400' : 'text-green-300'}`}
                 >
@@ -133,7 +138,7 @@ export default function GameTable() {
               <span className="text-white text-xl font-bold mb-5">VS</span>
 
               <div className="flex flex-col items-center gap-1">
-                <Card card={myCard} highlight={iWon} />
+                <FlippingCard key={`me-${flipKey}`} card={myCard} highlight={iWon} delay={0.1} />
                 <span
                   className={`text-xs font-semibold ${iWon ? 'text-yellow-400' : 'text-green-300'}`}
                 >

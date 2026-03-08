@@ -62,3 +62,13 @@
 - `GameTable` utilise `useState(true)` pour `isDealing`, `useCallback` pour `handleDealDone`
 
 **Build :** `vite build` ✓ (464 modules, 0 erreurs)
+
+## Session 6 — 2026-03-08
+
+### Task: Phase 4 — Animation de retournement de carte (flip 3D)
+
+**Réalisé :**
+- `src/components/Card.jsx` : ajout du composant `FlippingCard` (export nommé) — flip 3D via Framer Motion (`rotateY: 0 → 180`) avec `perspective: 600px`, `transformStyle: preserve-3d`, `backfaceVisibility: hidden` sur les deux faces (dos bleu + face visible)
+- `src/components/GameTable.jsx` : import de `FlippingCard`, ajout du state `flipKey` incrémenté à chaque changement de `lastResult` (via `useEffect`), remplacement de `<Card>` par `<FlippingCard key={flipKey}>` dans la zone centrale (léger délai de 0.1 s sur la carte du joueur local)
+
+**Build :** `vite build` ✓ (464 modules, 0 erreurs)
