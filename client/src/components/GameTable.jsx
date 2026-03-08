@@ -108,6 +108,47 @@ function DealAnimation({ onComplete }) {
 
 const BATTLE_PLACE_DURATION = 2000 // ms for 6 cards × 0.28s + 0.35s padding
 
+function TurnHistory({ history, players, myId }) {
+  if (!history || history.length === 0) return null
+
+  return (
+    <div className="absolute right-2 top-2 bottom-2 w-36 flex flex-col gap-1.5 overflow-hidden pointer-events-none">
+      <p className="text-green-400 text-xs font-semibold uppercase tracking-wider text-center mb-0.5">
+        Historique
+      </p>
+      <div className="flex flex-col gap-1.5">
+        {[...history].reverse().map((entry, i) => {
+          const winner = entry.winnerId ? players?.[entry.winnerId] : null
+          const isMine = entry.winnerId === myId
+          const isBattle = entry.event === 'battle'
+          return (
+            <motion.div
+              key={entry.turn}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1 - i * 0.18, x: 0 }}
+              transition={{ duration: 0.3 }}
+              className="bg-green-950/70 border border-green-700/50 rounded-lg px-2 py-1.5 text-xs"
+            >
+              <div className="flex items-center justify-between gap-1 mb-0.5">
+                <span className="text-green-400 font-mono">#{entry.turn}</span>
+                {isBattle && <span className="text-red-400 font-bold">⚔</span>}
+              </div>
+              {winner ? (
+                <p className={`font-semibold truncate ${isMine ? 'text-yellow-300' : 'text-blue-300'}`}>
+                  {winner.name ?? (isMine ? 'Vous' : 'Adv.')}
+                </p>
+              ) : (
+                <p className="text-gray-500 italic">Égalité</p>
+              )}
+              <p className="text-green-400">+{entry.cardsWon ?? 2} cartes</p>
+            </motion.div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
 export default function GameTable() {
   const [isDealing, setIsDealing] = useState(true)
   const handleDealDone = useCallback(() => setIsDealing(false), [])
@@ -151,7 +192,7 @@ export default function GameTable() {
 
     return () => timers.forEach(clearTimeout)
   }, [state.lastResult, state.myId])
-  const { gameState, myId, opponentReady, myFlipped, lastResult } = state
+  const { gameState, myId, opponentReady, myFlipped, lastResult, history } = state
 
   if (!gameState) return null
 
@@ -192,6 +233,8 @@ export default function GameTable() {
       <AnimatePresence>
         {showBattleAlert && <BattleFlash key="battle-flash" />}
       </AnimatePresence>
+
+      <TurnHistory history={history} players={gameState?.players} myId={myId} />
 
       {/* Opponent area */}
       <div className="flex flex-col items-center gap-2 pt-4">

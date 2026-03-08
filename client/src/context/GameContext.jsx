@@ -14,6 +14,8 @@ const initialState = {
   myFlipped: false,
   opponentReady: false,
   error: null,
+  history: [],    // last 5 turns: [{ turn, event, winnerId, cardsWon }]
+  turnCount: 0,
 }
 
 function reducer(state, action) {
@@ -34,9 +36,14 @@ function reducer(state, action) {
     case 'GAME_STATE': {
       const phase = action.gameState.phase
       const newScreen = phase === 'waiting' ? 'waiting' : phase === 'over' ? 'over' : 'game'
-      const lastResult = action.card1
+      const hasResult = !!action.card1
+      const lastResult = hasResult
         ? { card1: action.card1, card2: action.card2, winnerId: action.winnerId, cardsWon: action.cardsWon, event: action.event }
         : state.lastResult
+      const newTurnCount = hasResult ? state.turnCount + 1 : state.turnCount
+      const newHistory = hasResult
+        ? [...state.history, { turn: newTurnCount, event: action.event, winnerId: action.winnerId, cardsWon: action.cardsWon }].slice(-5)
+        : state.history
       return {
         ...state,
         screen: newScreen,
@@ -47,6 +54,8 @@ function reducer(state, action) {
         myFlipped: false,
         opponentReady: false,
         error: null,
+        history: newHistory,
+        turnCount: newTurnCount,
       }
     }
     case 'MY_FLIPPED':
@@ -64,7 +73,7 @@ function reducer(state, action) {
     case 'ERROR':
       return { ...state, error: action.message }
     case 'RESET':
-      return { ...initialState }
+      return { ...initialState, history: [], turnCount: 0 }
     default:
       return state
   }

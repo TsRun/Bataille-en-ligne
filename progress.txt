@@ -141,3 +141,14 @@
 
 **Build :** `vite build` ✓ (464 modules, 0 erreurs)
 **Tests :** 18/18 ✓
+
+## Session 13 — 2026-03-08
+
+### Task: Phase 5 — Historique des 5 derniers tours (bandeau latéral)
+
+**Réalisé :**
+- `src/context/GameContext.jsx` : ajout de `history: []` et `turnCount: 0` à l'état initial. Dans le reducer `GAME_STATE`, quand un résultat est présent (card1 défini), on incrémente `turnCount` et on pousse `{ turn, event, winnerId, cardsWon }` dans `history`, en gardant les 5 dernières entrées (`slice(-5)`).
+- `src/components/GameTable.jsx` : ajout du composant `TurnHistory` — panneau absolu positionné en haut à droite, affiche les 5 derniers tours dans l'ordre anti-chronologique. Chaque entrée montre le numéro de tour, l'icône ⚔ si bataille, le nom du vainqueur (coloré en jaune si c'est moi, bleu sinon), et le nombre de cartes gagnées. Les entrées plus anciennes sont légèrement transparentes (opacity dégressive). Apparition animée via Framer Motion.
+
+**Build :** `vite build` ✓ (464 modules, 0 erreurs)
+**Tests :** 18/18 ✓
