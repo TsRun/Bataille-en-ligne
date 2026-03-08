@@ -50,11 +50,23 @@ export default function GameTable() {
   const [isDealing, setIsDealing] = useState(true)
   const handleDealDone = useCallback(() => setIsDealing(false), [])
   const [flipKey, setFlipKey] = useState(0)
+  const [slideDir, setSlideDir] = useState(0) // -1 = up (opponent wins), 1 = down (I win), 0 = none
   const { state, flipCard } = useGame()
 
   useEffect(() => {
     if (state.lastResult) setFlipKey((k) => k + 1)
   }, [state.lastResult])
+
+  useEffect(() => {
+    setSlideDir(0)
+    if (state.lastResult?.winnerId) {
+      const winnerId = state.lastResult.winnerId
+      const timer = setTimeout(() => {
+        setSlideDir(winnerId === state.myId ? 1 : -1)
+      }, 750)
+      return () => clearTimeout(timer)
+    }
+  }, [state.lastResult, state.myId])
   const { gameState, myId, opponentReady, myFlipped, lastResult } = state
 
   if (!gameState) return null
@@ -125,7 +137,14 @@ export default function GameTable() {
 
         {myCard && opponentCard ? (
           <>
-            <div className="flex gap-6 items-end">
+            <motion.div
+              className="flex gap-6 items-end"
+              animate={slideDir !== 0
+                ? { y: slideDir * 350, opacity: 0, scale: 0.6 }
+                : { y: 0, opacity: 1, scale: 1 }
+              }
+              transition={{ duration: 0.45, ease: 'easeIn' }}
+            >
               <div className="flex flex-col items-center gap-1">
                 <FlippingCard key={`opp-${flipKey}`} card={opponentCard} highlight={opponentWon} />
                 <span
@@ -145,7 +164,7 @@ export default function GameTable() {
                   {iWon ? '🏆 ' : ''}Vous
                 </span>
               </div>
-            </div>
+            </motion.div>
 
             {lastResult?.cardsWon > 2 && (
               <p className="text-green-300 text-sm">

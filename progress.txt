@@ -72,3 +72,12 @@
 - `src/components/GameTable.jsx` : import de `FlippingCard`, ajout du state `flipKey` incrémenté à chaque changement de `lastResult` (via `useEffect`), remplacement de `<Card>` par `<FlippingCard key={flipKey}>` dans la zone centrale (léger délai de 0.1 s sur la carte du joueur local)
 
 **Build :** `vite build` ✓ (464 modules, 0 erreurs)
+
+## Session 7 — 2026-03-08
+
+### Task: Phase 4 — Animation de déplacement (slide-to-winner)
+
+**Réalisé :**
+- `src/components/GameTable.jsx` : ajout du state `slideDir` (0 / -1 / +1) — après 750 ms (flip terminé), les cartes du centre glissent vers la pile du vainqueur via un `motion.div` wrapper (`y: ±350, opacity: 0, scale: 0.6`, durée 0.45 s). Le slideDir est réinitialisé à 0 à chaque nouveau `lastResult`. Direction : +1 (vers bas / ma pile) si je gagne, -1 (vers haut / pile adversaire) si l'adversaire gagne.
+
+**Build :** `vite build` ✓ (464 modules, 0 erreurs)
