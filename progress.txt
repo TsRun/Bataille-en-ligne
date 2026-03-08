@@ -106,3 +106,16 @@
 - Réorganisation du tableau `timers` dans l'useEffect pour regrouper tous les timers proprement.
 
 **Build :** `vite build` ✓ (464 modules, 0 erreurs)
+
+## Session 10 — 2026-03-08
+
+### Task: Phase 4 — Animation de fin de partie (confettis + effet victoire/défaite)
+
+**Réalisé :**
+- `src/screens/GameScreen.jsx` : remplacement de l'écran de fin statique par une version animée Framer Motion.
+  - **Victoire** : 40 pièces de confetti (couleurs variées, tailles différentes, délais et rotations prédéfinis) tombent en boucle via `motion.div` avec `repeat: Infinity`. La carte de résultat apparaît avec scale 0.5→1 + `backOut`. L'emoji 🏆 surgit avec scale 0→1.4→1 + rotation. Titre en `text-yellow-300`.
+  - **Défaite** : overlay noir semi-transparent (`bg-black/40`) s'estompe en fondu. L'emoji 💀 surgit avec la même animation. Entrée animée du panneau identique.
+  - Bouton "Retour à l'accueil" apparaît en fondu avec délai de 0.95 s.
+
+**Build :** `vite build` ✓ (464 modules, 0 erreurs)
+**Tests :** 18/18 ✓
