@@ -1,0 +1,12 @@
+## Session 1 — 2026-03-08
+
+### Task: Phase 1 — Backend complet (Node.js + Express + Socket.io)
+
+**Réalisé :**
+- Initialisé `/server` avec Node.js, Express, Socket.io, cors, nodemon, jest
+- `src/deck.js` : création du jeu 52 cartes, shuffle Fisher-Yates, deal 26/26
+- `src/game.js` : état complet du jeu (phases, piles, pot, battlePot), comparaison de cartes, logique de bataille récursive, détection fin de partie, sérialisation de l'état
+- `index.js` : serveur Express + Socket.io avec événements `create_room`, `join_room`, `player_ready`, `game_state`, `game_over`, gestion déconnexion
+- Tests Jest : 18 tests passants (deck + game logic)
+
+**Tests :** 18/18 ✓
