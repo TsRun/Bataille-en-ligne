@@ -81,3 +81,16 @@
 - `src/components/GameTable.jsx` : ajout du state `slideDir` (0 / -1 / +1) — après 750 ms (flip terminé), les cartes du centre glissent vers la pile du vainqueur via un `motion.div` wrapper (`y: ±350, opacity: 0, scale: 0.6`, durée 0.45 s). Le slideDir est réinitialisé à 0 à chaque nouveau `lastResult`. Direction : +1 (vers bas / ma pile) si je gagne, -1 (vers haut / pile adversaire) si l'adversaire gagne.
 
 **Build :** `vite build` ✓ (464 modules, 0 erreurs)
+
+## Session 8 — 2026-03-08
+
+### Task: Phase 4 — Animation de bataille (cartes cachées)
+
+**Réalisé :**
+- `src/components/GameTable.jsx` : ajout du composant `BattlePlacingCards` — 6 cartes face cachée apparaissent une par une depuis le haut (adversaire) et le bas (joueur), avec un délai de 0.28 s entre chaque et une animation `backOut` (légèrement rebondissante). Rotations légèrement prédéfinies pour éviter le re-render.
+- Fusionné les deux `useEffect` (flipKey + slideDir) en un seul effet séquencé : pour un tour de bataille, l'animation de pose (2 000 ms) précède le flip des cartes de résolution, lui-même suivi du slide (750 ms). Pour un tour normal, le comportement est identique à avant.
+- La mention "⚔ BATAILLE !" reste visible pendant toute la séquence (placing + résolution).
+- Centre de jeu restructuré avec `<AnimatePresence mode="wait">` pour alterner entre `BattlePlacingCards`, les cartes de résolution, et l'état idle.
+
+**Build :** `vite build` ✓ (464 modules, 0 erreurs)
+**Tests :** 18/18 ✓
