@@ -183,3 +183,16 @@
 
 **Build :** `vite build` ✓ (464 modules, 0 erreurs)
 **Tests :** 18/18 ✓
+
+## Session 16 — 2026-03-08
+
+### Task: Phase 5 — Bouton "Rejouer" (même room)
+
+**Réalisé :**
+- `server/src/game.js` : ajout de `restartVotes: new Set()` dans `createGame` et export de `restartGame(game)` — re-deal un nouveau jeu de 52 cartes, réinitialise piles, pot, battlePot, readyPlayers, restartVotes, winner, phase → 'playing'
+- `server/index.js` : import de `restartGame`, ajout de l'événement `restart_game` — chaque joueur vote, quand les 2 ont voté → `restartGame` puis broadcast `game_state` avec event `'game_restarted'`; broadcast intermédiaire `restart_vote` pour notifier l'adversaire
+- `src/context/GameContext.jsx` : ajout de `restartVoted` et `opponentRestartVoted` à l'état initial ; actions `RESTART_VOTED` et `OPPONENT_RESTART_VOTED` ; écoute de `restart_vote` socket ; `restartGame()` émet l'événement et dispatch `RESTART_VOTED` ; le reducer `GAME_STATE` détecte `game_restarted` et remet `history`, `turnCount`, `lastResult` à zéro
+- `src/screens/GameScreen.jsx` : ajout du bouton "Rejouer" (vert) sur l'écran de fin — après le clic, remplacé par "En attente de l'adversaire…" (ou "Redémarrage…" si l'adversaire a aussi voté) ; bouton "Retour à l'accueil" toujours visible
+
+**Build :** `vite build` ✓ (464 modules, 0 erreurs)
+**Tests :** 18/18 ✓

@@ -32,8 +32,8 @@ function Confetti() {
 }
 
 export default function GameScreen() {
-  const { state, reset } = useGame()
-  const { gameState, myId, screen } = state
+  const { state, reset, restartGame } = useGame()
+  const { gameState, myId, screen, restartVoted, opponentRestartVoted } = state
 
   if (screen === 'over') {
     const isWinner = gameState?.winner === myId
@@ -86,15 +86,31 @@ export default function GameScreen() {
               : "Vous n'avez plus de cartes."}
           </motion.p>
 
-          <motion.button
-            onClick={reset}
-            className="px-8 py-3 bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-bold rounded-lg transition-colors"
+          <motion.div
+            className="flex flex-col gap-3 items-center"
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.95 }}
           >
-            Retour à l&apos;accueil
-          </motion.button>
+            {restartVoted ? (
+              <p className="text-yellow-300 font-semibold animate-pulse">
+                {opponentRestartVoted ? 'Redémarrage…' : 'En attente de l\'adversaire…'}
+              </p>
+            ) : (
+              <button
+                onClick={restartGame}
+                className="px-8 py-3 bg-green-500 hover:bg-green-400 text-white font-bold rounded-lg transition-colors"
+              >
+                Rejouer
+              </button>
+            )}
+            <button
+              onClick={reset}
+              className="px-8 py-3 bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-bold rounded-lg transition-colors"
+            >
+              Retour à l&apos;accueil
+            </button>
+          </motion.div>
         </motion.div>
       </div>
     )

@@ -20,9 +20,26 @@ function createGame(roomId) {
     pot: [],         // cards currently in play (center)
     battlePot: [],   // cards staked during battle rounds
     readyPlayers: new Set(), // set of socketIds that clicked "flip"
+    restartVotes: new Set(), // set of socketIds that voted to restart
     winner: null,
     initialPiles: [pile1, pile2],
   };
+}
+
+/**
+ * Reset game state for a rematch in the same room (same players).
+ */
+function restartGame(game) {
+  const { pile1, pile2 } = dealDeck();
+  const [p1id, p2id] = game.playerOrder;
+  game.players[p1id].pile = pile1;
+  game.players[p2id].pile = pile2;
+  game.pot = [];
+  game.battlePot = [];
+  game.readyPlayers = new Set();
+  game.restartVotes = new Set();
+  game.winner = null;
+  game.phase = 'playing';
 }
 
 /**
@@ -210,4 +227,4 @@ function removePlayer(game, socketId) {
   return endGame(game, otherId, 'disconnect');
 }
 
-module.exports = { createGame, addPlayer, playerFlip, serializeState, removePlayer };
+module.exports = { createGame, addPlayer, playerFlip, serializeState, removePlayer, restartGame };

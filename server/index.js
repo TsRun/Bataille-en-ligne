@@ -4,7 +4,7 @@ const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
 const cors = require('cors');
-const { createGame, addPlayer, playerFlip, serializeState, removePlayer } = require('./src/game');
+const { createGame, addPlayer, playerFlip, serializeState, removePlayer, restartGame } = require('./src/game');
 
 const app = express();
 app.use(cors());
@@ -114,6 +114,22 @@ io.on('connection', (socket) => {
         card2: result.card2,
         cardsWon: result.cardsWon,
       });
+    }
+  });
+
+  // Player votes to restart the game in the same room
+  socket.on('restart_game', () => {
+    const roomId = socket.data.roomId;
+    const game = rooms.get(roomId);
+    if (!game || game.phase !== 'over') return;
+
+    game.restartVotes.add(socket.id);
+    io.to(roomId).emit('restart_vote', { playerId: socket.id, count: game.restartVotes.size });
+
+    if (game.restartVotes.size >= 2) {
+      restartGame(game);
+      io.to(roomId).emit('game_state', { gameState: serializeState(game), event: 'game_restarted' });
+      console.log(`Game restarted in room ${roomId}`);
     }
   });
 

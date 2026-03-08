@@ -16,6 +16,8 @@ const initialState = {
   error: null,
   history: [],    // last 5 turns: [{ turn, event, winnerId, cardsWon }]
   turnCount: 0,
+  restartVoted: false,       // I clicked Rejouer
+  opponentRestartVoted: false, // opponent clicked Rejouer
 }
 
 function reducer(state, action) {
@@ -36,12 +38,13 @@ function reducer(state, action) {
     case 'GAME_STATE': {
       const phase = action.gameState.phase
       const newScreen = phase === 'waiting' ? 'waiting' : phase === 'over' ? 'over' : 'game'
-      const hasResult = !!action.card1
+      const isRestart = action.event === 'game_restarted'
+      const hasResult = !isRestart && !!action.card1
       const lastResult = hasResult
         ? { card1: action.card1, card2: action.card2, winnerId: action.winnerId, cardsWon: action.cardsWon, event: action.event }
-        : state.lastResult
-      const newTurnCount = hasResult ? state.turnCount + 1 : state.turnCount
-      const newHistory = hasResult
+        : isRestart ? null : state.lastResult
+      const newTurnCount = isRestart ? 0 : hasResult ? state.turnCount + 1 : state.turnCount
+      const newHistory = isRestart ? [] : hasResult
         ? [...state.history, { turn: newTurnCount, event: action.event, winnerId: action.winnerId, cardsWon: action.cardsWon }].slice(-5)
         : state.history
       return {
@@ -56,6 +59,8 @@ function reducer(state, action) {
         error: null,
         history: newHistory,
         turnCount: newTurnCount,
+        restartVoted: false,
+        opponentRestartVoted: false,
       }
     }
     case 'MY_FLIPPED':
@@ -70,6 +75,10 @@ function reducer(state, action) {
       }
     case 'OPPONENT_READY':
       return { ...state, opponentReady: true }
+    case 'RESTART_VOTED':
+      return { ...state, restartVoted: true }
+    case 'OPPONENT_RESTART_VOTED':
+      return { ...state, opponentRestartVoted: true }
     case 'ERROR':
       return { ...state, error: action.message }
     case 'RESET':
@@ -107,6 +116,12 @@ export function GameProvider({ children }) {
       }
     })
 
+    socket.on('restart_vote', ({ playerId }) => {
+      if (playerId !== socket.id) {
+        dispatch({ type: 'OPPONENT_RESTART_VOTED' })
+      }
+    })
+
     socket.on('error', ({ message }) => {
       dispatch({ type: 'ERROR', message })
     })
@@ -117,6 +132,7 @@ export function GameProvider({ children }) {
       socket.off('game_state')
       socket.off('game_over')
       socket.off('player_ready_ack')
+      socket.off('restart_vote')
       socket.off('error')
       socket.disconnect()
     }
@@ -137,12 +153,17 @@ export function GameProvider({ children }) {
     dispatch({ type: 'MY_FLIPPED' })
   }
 
+  const restartGame = () => {
+    socket.emit('restart_game')
+    dispatch({ type: 'RESTART_VOTED' })
+  }
+
   const reset = () => {
     dispatch({ type: 'RESET' })
   }
 
   return (
-    <GameContext.Provider value={{ state, createRoom, joinRoom, flipCard, reset }}>
+    <GameContext.Provider value={{ state, createRoom, joinRoom, flipCard, restartGame, reset }}>
       {children}
     </GameContext.Provider>
   )
