@@ -24,3 +24,17 @@
 - `App.jsx` minimal vérifiant que Tailwind fonctionne (fond vert, texte blanc)
 
 **Build :** `vite build` ✓ (29 modules, 0 erreurs)
+
+## Session 3 — 2026-03-08
+
+### Task: Phase 2 — Frontend structure and Socket.io connection
+
+**Réalisé :**
+- `src/socket.js` : singleton Socket.io-client (autoConnect: false)
+- `src/context/GameContext.jsx` : React Context + useReducer, gère tous les événements socket (`room_created`, `game_state`, `game_over`, `player_ready_ack`, `error`), expose `createRoom`, `joinRoom`, `flipCard`, `reset`
+- `src/screens/HomeScreen.jsx` : écran d'accueil avec saisie du nom, bouton "Créer une partie", champ code + bouton "Rejoindre", affichage d'erreur animé
+- `src/screens/WaitingScreen.jsx` : écran d'attente animé (Framer Motion), affichage du code de room, copie en un clic via clipboard API
+- `src/screens/GameScreen.jsx` : placeholder Phase 3 + écran de fin (victoire/défaite)
+- `src/App.jsx` : routing basé sur `state.screen` (home → waiting → game/over), wrappé dans `<GameProvider>`
+
+**Build :** `vite build` ✓ (462 modules, 0 erreurs)

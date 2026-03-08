@@ -64,12 +64,12 @@ Quand les deux cartes retournées ont la **même valeur** :
 ## Phase 2 : Frontend — Structure et connexion
 
 - [x] Initialiser le projet React + Vite dans `/client` avec Tailwind CSS et Framer Motion
-- [ ] Créer le composant `App.jsx` avec routing simple : écran d'accueil / écran de jeu
-- [ ] Créer l'écran d'accueil `HomeScreen.jsx` : bouton "Créer une partie" + champ pour rejoindre via code
-- [ ] Connecter Socket.io côté client, gérer les événements `game_state` et `game_over`
-- [ ] Créer le store d'état global du jeu (React Context ou Zustand) pour stocker l'état reçu du serveur
-- [ ] Afficher un lien/code partageable après création de la room (copie en un clic)
-- [ ] Afficher un écran d'attente animé tant que le deuxième joueur n'a pas rejoint
+- [x] Créer le composant `App.jsx` avec routing simple : écran d'accueil / écran de jeu
+- [x] Créer l'écran d'accueil `HomeScreen.jsx` : bouton "Créer une partie" + champ pour rejoindre via code
+- [x] Connecter Socket.io côté client, gérer les événements `game_state` et `game_over`
+- [x] Créer le store d'état global du jeu (React Context ou Zustand) pour stocker l'état reçu du serveur
+- [x] Afficher un lien/code partageable après création de la room (copie en un clic)
+- [x] Afficher un écran d'attente animé tant que le deuxième joueur n'a pas rejoint
 
 ## Phase 3 : Frontend — Table de jeu
 

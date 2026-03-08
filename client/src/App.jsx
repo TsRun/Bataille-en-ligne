@@ -1,9 +1,28 @@
-function App() {
-  return (
-    <div className="min-h-screen bg-green-900 flex items-center justify-center">
-      <h1 className="text-white text-4xl font-bold">Bataille</h1>
-    </div>
-  )
+import { GameProvider, useGame } from './context/GameContext'
+import HomeScreen from './screens/HomeScreen'
+import WaitingScreen from './screens/WaitingScreen'
+import GameScreen from './screens/GameScreen'
+
+function Router() {
+  const { state } = useGame()
+
+  switch (state.screen) {
+    case 'home':
+      return <HomeScreen />
+    case 'waiting':
+      return <WaitingScreen />
+    case 'game':
+    case 'over':
+      return <GameScreen />
+    default:
+      return <HomeScreen />
+  }
 }
 
-export default App
+export default function App() {
+  return (
+    <GameProvider>
+      <Router />
+    </GameProvider>
+  )
+}
