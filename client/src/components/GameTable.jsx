@@ -1,7 +1,54 @@
+import { useState, useEffect, useCallback } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import Card from './Card'
 import { useGame } from '../context/GameContext'
 
+function DealAnimation({ onComplete }) {
+  useEffect(() => {
+    const timer = setTimeout(onComplete, 1900)
+    return () => clearTimeout(timer)
+  }, [onComplete])
+
+  // 10 cards alternating between opponent (up) and player (down)
+  const cards = Array.from({ length: 10 }, (_, i) => ({
+    toOpponent: i % 2 === 0,
+    delay: i * 0.13,
+    rotateZ: (Math.random() - 0.5) * 12,
+  }))
+
+  return (
+    <div className="absolute inset-0 z-20 flex items-center justify-center overflow-hidden pointer-events-none">
+      <motion.div
+        className="absolute inset-0 bg-green-950/70"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.3 }}
+      />
+      <motion.p
+        className="absolute text-green-300 font-semibold tracking-widest text-sm uppercase z-30"
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.2 }}
+      >
+        Distribution en cours…
+      </motion.p>
+      {cards.map(({ toOpponent, delay, rotateZ }, i) => (
+        <motion.div
+          key={i}
+          className="absolute w-20 h-28 bg-blue-900 rounded-xl border-2 border-blue-500 shadow-xl"
+          initial={{ y: 0, x: (i - 4.5) * 2, opacity: 1, rotateZ: 0 }}
+          animate={{ y: toOpponent ? -300 : 300, opacity: [1, 1, 0], rotateZ }}
+          transition={{ delay, duration: 0.55, ease: 'easeOut' }}
+        />
+      ))}
+    </div>
+  )
+}
+
 export default function GameTable() {
+  const [isDealing, setIsDealing] = useState(true)
+  const handleDealDone = useCallback(() => setIsDealing(false), [])
   const { state, flipCard } = useGame()
   const { gameState, myId, opponentReady, myFlipped, lastResult } = state
 
@@ -35,7 +82,11 @@ export default function GameTable() {
   const opponentWon = winnerId === opponentId
 
   return (
-    <div className="min-h-screen bg-green-900 flex flex-col p-4 gap-4">
+    <div className="relative min-h-screen bg-green-900 flex flex-col p-4 gap-4">
+
+      <AnimatePresence>
+        {isDealing && <DealAnimation onComplete={handleDealDone} />}
+      </AnimatePresence>
 
       {/* Opponent area */}
       <div className="flex flex-col items-center gap-2 pt-4">

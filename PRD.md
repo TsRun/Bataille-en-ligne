@@ -83,7 +83,7 @@ Quand les deux cartes retournées ont la **même valeur** :
 
 ## Phase 4 : Frontend — Animations
 
-- [ ] Animation de distribution initiale : les cartes "volent" vers les piles au démarrage
+- [x] Animation de distribution initiale : les cartes "volent" vers les piles au démarrage
 - [ ] Animation de retournement de carte : flip 3D (rotateY 0° → 180°) au moment où la carte est révélée
 - [ ] Animation de déplacement : les cartes gagnées "glissent" vers la pile du vainqueur
 - [ ] Animation de bataille : les cartes cachées se posent une par une avec un léger délai entre chaque

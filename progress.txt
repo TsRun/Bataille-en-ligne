@@ -50,3 +50,15 @@
 - `src/screens/GameScreen.jsx` : remplace le placeholder par `<GameTable />`, conserve l'écran de fin (victoire/défaite)
 
 **Build :** `vite build` ✓ (464 modules, 0 erreurs)
+
+## Session 5 — 2026-03-08
+
+### Task: Phase 4 — Animation de distribution initiale
+
+**Réalisé :**
+- `src/components/GameTable.jsx` : ajout du composant `DealAnimation` (Framer Motion) — 10 cartes volent alternativement vers la pile adversaire (haut) et la pile joueur (bas) avec délai progressif (0.13 s entre chaque)
+- Overlay semi-transparent `bg-green-950/70` + texte "Distribution en cours…" pendant l'animation
+- Animation se termine automatiquement après 1.9 s via `setTimeout`, `AnimatePresence` gère le fade-out
+- `GameTable` utilise `useState(true)` pour `isDealing`, `useCallback` pour `handleDealDone`
+
+**Build :** `vite build` ✓ (464 modules, 0 erreurs)
