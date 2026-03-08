@@ -196,3 +196,12 @@
 
 **Build :** `vite build` ✓ (464 modules, 0 erreurs)
 **Tests :** 18/18 ✓
+
+## Session 17 — 2026-03-08
+
+### Task: Phase 5 — README.md avec instructions de lancement
+
+**Réalisé :**
+- `README.md` : créé à la racine du projet avec stack technique, prérequis, instructions de lancement en 2 étapes (serveur sur :3001, client sur :5173), instructions de jeu (créer/rejoindre une room), et commande `npm test` pour les tests backend.
+
+**Tests :** 18/18 ✓

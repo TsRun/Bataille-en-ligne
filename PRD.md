@@ -98,4 +98,4 @@ Quand les deux cartes retournées ont la **même valeur** :
 - [x] Afficher un message de résultat clair sur la carte gagnante/perdante avant qu'elles bougent
 - [x] Responsive design : fonctionne sur mobile et desktop
 - [x] Ajouter un bouton "Rejouer" sur l'écran de fin qui relance une nouvelle partie dans la même room
-- [ ] Créer un `README.md` avec les instructions de lancement (`npm run dev` client + server)
+- [x] Créer un `README.md` avec les instructions de lancement (`npm run dev` client + server)
