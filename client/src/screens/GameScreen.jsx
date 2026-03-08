@@ -52,7 +52,7 @@ export default function GameScreen() {
         )}
 
         <motion.div
-          className="relative z-20 bg-green-800 rounded-2xl p-10 text-center shadow-2xl"
+          className="relative z-20 bg-green-800 rounded-2xl p-6 sm:p-10 text-center shadow-2xl"
           initial={{ scale: 0.5, opacity: 0, y: 40 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: 'backOut' }}

@@ -15,14 +15,14 @@ function BattlePlacingCards() {
 
   return (
     <motion.div
-      className="flex items-end gap-1.5 justify-center"
+      className="flex items-end gap-1 sm:gap-1.5 justify-center"
       exit={{ opacity: 0, scale: 0.8 }}
       transition={{ duration: 0.25 }}
     >
       {cards.map(({ fromTop, delay, rotateZ }, i) => (
         <motion.div
           key={i}
-          className="relative w-14 h-20 bg-blue-900 rounded-xl border-2 border-blue-500 shadow-lg flex-shrink-0"
+          className="relative w-10 h-14 sm:w-14 sm:h-20 bg-blue-900 rounded-xl border-2 border-blue-500 shadow-lg flex-shrink-0"
           initial={{ y: fromTop ? -140 : 140, opacity: 0, rotateZ }}
           animate={{ y: 0, opacity: 1, rotateZ: 0 }}
           transition={{ delay, duration: 0.35, ease: 'backOut' }}
@@ -51,7 +51,7 @@ function BattleFlash() {
         transition={{ duration: 0.5 }}
       />
       <motion.p
-        className="relative text-yellow-300 font-black text-6xl tracking-widest z-10 text-center"
+        className="relative text-yellow-300 font-black text-4xl sm:text-6xl tracking-widest z-10 text-center"
         style={{ textShadow: '0 0 40px rgba(255,180,0,0.9), 0 0 80px rgba(255,100,0,0.6)' }}
         initial={{ scale: 0.1, opacity: 0, rotateZ: -8 }}
         animate={{ scale: [0.1, 1.5, 1.15], opacity: [0, 1, 1], rotateZ: [-8, 3, 0] }}
@@ -114,7 +114,7 @@ function TurnHistory({ history, players, myId }) {
   if (!history || history.length === 0) return null
 
   return (
-    <div className="absolute right-2 top-2 bottom-2 w-36 flex flex-col gap-1.5 overflow-hidden pointer-events-none">
+    <div className="absolute right-2 top-2 bottom-2 w-36 hidden md:flex flex-col gap-1.5 overflow-hidden pointer-events-none">
       <p className="text-green-400 text-xs font-semibold uppercase tracking-wider text-center mb-0.5">
         Historique
       </p>
@@ -295,7 +295,7 @@ export default function GameTable() {
               transition={{ duration: 0.2 }}
             >
               <motion.div
-                className="flex gap-6 items-end"
+                className="flex gap-3 sm:gap-6 items-end"
                 animate={slideDir !== 0
                   ? { y: slideDir * 350, opacity: 0, scale: 0.6 }
                   : { y: 0, opacity: 1, scale: 1 }
@@ -412,7 +412,7 @@ export default function GameTable() {
         <button
           onClick={flipCard}
           disabled={myFlipped}
-          className={`mt-1 px-10 py-3 rounded-xl font-bold text-lg transition-all active:scale-95 ${
+          className={`mt-1 px-8 sm:px-10 py-3 rounded-xl font-bold text-lg transition-all active:scale-95 touch-manipulation ${
             myFlipped
               ? 'bg-gray-600 text-gray-400 cursor-not-allowed'
               : 'bg-yellow-500 hover:bg-yellow-400 text-gray-900 shadow-lg'

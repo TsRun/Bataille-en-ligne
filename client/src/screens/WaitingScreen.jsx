@@ -63,7 +63,7 @@ export default function WaitingScreen() {
           className="bg-green-800 rounded-2xl p-6 inline-block shadow-xl"
         >
           <p className="text-green-300 text-xs uppercase tracking-widest mb-2">Code de la partie</p>
-          <div className="text-white text-5xl font-mono font-bold tracking-widest mb-5 select-all">
+          <div className="text-white text-3xl sm:text-5xl font-mono font-bold tracking-widest mb-5 select-all">
             {roomId}
           </div>
           <button

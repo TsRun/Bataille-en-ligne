@@ -165,3 +165,21 @@
 
 **Build :** `vite build` ✓ (464 modules, 0 erreurs)
 **Tests :** 18/18 ✓
+
+## Session 15 — 2026-03-08
+
+### Task: Phase 5 — Responsive design (mobile + desktop)
+
+**Réalisé :**
+- `client/index.html` : titre corrigé de "client" → "Bataille"
+- `src/components/GameTable.jsx` :
+  - `TurnHistory` : `hidden md:flex` — panneau masqué sur mobile (évite le chevauchement avec le contenu)
+  - `BattlePlacingCards` : cartes `w-10 h-14 sm:w-14 sm:h-20`, gap `gap-1 sm:gap-1.5` — évite le débordement horizontal sur mobile (était 366px > 343px disponibles)
+  - `BattleFlash` : texte `text-4xl sm:text-6xl`
+  - Zone centrale VS : gap `gap-3 sm:gap-6`
+  - Bouton "Retourner" : padding `px-8 sm:px-10`, ajout de `touch-manipulation` pour éviter le double-tap zoom iOS
+- `src/screens/GameScreen.jsx` : panneau fin de partie `p-6 sm:p-10`
+- `src/screens/WaitingScreen.jsx` : code de room `text-3xl sm:text-5xl`
+
+**Build :** `vite build` ✓ (464 modules, 0 erreurs)
+**Tests :** 18/18 ✓

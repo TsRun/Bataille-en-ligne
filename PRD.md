@@ -96,6 +96,6 @@ Quand les deux cartes retournées ont la **même valeur** :
 - [x] Ajouter les noms des joueurs (saisi à l'entrée, affiché sur la table)
 - [x] Afficher l'historique des 5 derniers tours dans un bandeau latéral (ex: "Tour 12 - Bataille ! +10 cartes")
 - [x] Afficher un message de résultat clair sur la carte gagnante/perdante avant qu'elles bougent
-- [ ] Responsive design : fonctionne sur mobile et desktop
+- [x] Responsive design : fonctionne sur mobile et desktop
 - [ ] Ajouter un bouton "Rejouer" sur l'écran de fin qui relance une nouvelle partie dans la même room
 - [ ] Créer un `README.md` avec les instructions de lancement (`npm run dev` client + server)
