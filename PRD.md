@@ -63,7 +63,7 @@ Quand les deux cartes retournées ont la **même valeur** :
 
 ## Phase 2 : Frontend — Structure et connexion
 
-- [ ] Initialiser le projet React + Vite dans `/client` avec Tailwind CSS et Framer Motion
+- [x] Initialiser le projet React + Vite dans `/client` avec Tailwind CSS et Framer Motion
 - [ ] Créer le composant `App.jsx` avec routing simple : écran d'accueil / écran de jeu
 - [ ] Créer l'écran d'accueil `HomeScreen.jsx` : bouton "Créer une partie" + champ pour rejoindre via code
 - [ ] Connecter Socket.io côté client, gérer les événements `game_state` et `game_over`

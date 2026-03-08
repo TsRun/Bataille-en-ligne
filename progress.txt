@@ -10,3 +10,17 @@
 - Tests Jest : 18 tests passants (deck + game logic)
 
 **Tests :** 18/18 ✓
+
+## Session 2 — 2026-03-08
+
+### Task: Phase 2 — Initialisation client React + Vite
+
+**Réalisé :**
+- Initialisé `/client` avec Vite + React template
+- Installé Tailwind CSS v4 (`@tailwindcss/vite`), Framer Motion, Socket.io-client
+- Configuré le plugin Tailwind dans `vite.config.js`
+- Remplacé `index.css` par `@import "tailwindcss"` (Tailwind v4 style)
+- Nettoyé le boilerplate Vite (App.css, react.svg, compteur)
+- `App.jsx` minimal vérifiant que Tailwind fonctionne (fond vert, texte blanc)
+
+**Build :** `vite build` ✓ (29 modules, 0 erreurs)
