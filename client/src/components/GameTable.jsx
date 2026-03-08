@@ -107,6 +107,8 @@ function DealAnimation({ onComplete }) {
 }
 
 const BATTLE_PLACE_DURATION = 2000 // ms for 6 cards × 0.28s + 0.35s padding
+const FLIP_DURATION = 700 // ms for flip animation to complete
+const SLIDE_DELAY = 1500 // ms after flip start before slide (extended from 750 to show result badge)
 
 function TurnHistory({ history, players, myId }) {
   if (!history || history.length === 0) return null
@@ -156,16 +158,19 @@ export default function GameTable() {
   const [slideDir, setSlideDir] = useState(0) // -1 = up (opponent wins), 1 = down (I win), 0 = none
   const [placingBattle, setPlacingBattle] = useState(false)
   const [showBattleAlert, setShowBattleAlert] = useState(false)
+  const [showResultBadge, setShowResultBadge] = useState(false)
   const { state, flipCard } = useGame()
 
-  // Unified sequencing effect: placing → flip → slide
+  // Unified sequencing effect: placing → flip → badge → slide
   useEffect(() => {
     if (!state.lastResult) return
     setSlideDir(0)
+    setShowResultBadge(false)
 
     const isBattleRound = state.lastResult.event === 'battle'
     const flipDelay = isBattleRound ? BATTLE_PLACE_DURATION : 0
-    const slideDelay = flipDelay + 750
+    const badgeDelay = flipDelay + FLIP_DURATION
+    const slideDelay = flipDelay + SLIDE_DELAY
 
     const timers = []
 
@@ -183,9 +188,15 @@ export default function GameTable() {
     timers.push(t1)
 
     if (state.lastResult.winnerId) {
+      const tBadge = setTimeout(() => setShowResultBadge(true), badgeDelay)
+      timers.push(tBadge)
+    }
+
+    if (state.lastResult.winnerId) {
       const winnerId = state.lastResult.winnerId
       const t2 = setTimeout(() => {
         setSlideDir(winnerId === state.myId ? 1 : -1)
+        setShowResultBadge(false)
       }, slideDelay)
       timers.push(t2)
     }
@@ -292,7 +303,38 @@ export default function GameTable() {
                 transition={{ duration: 0.45, ease: 'easeIn' }}
               >
                 <div className="flex flex-col items-center gap-1">
-                  <FlippingCard key={`opp-${flipKey}`} card={opponentCard} highlight={opponentWon} />
+                  <div className="relative">
+                    <FlippingCard key={`opp-${flipKey}`} card={opponentCard} highlight={opponentWon} />
+                    <AnimatePresence>
+                      {showResultBadge && opponentWon && (
+                        <motion.div
+                          className="absolute inset-0 flex items-center justify-center rounded-2xl bg-yellow-400/20"
+                          initial={{ opacity: 0, scale: 0.5 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.25, ease: 'backOut' }}
+                        >
+                          <span className="text-yellow-300 font-black text-lg leading-tight text-center drop-shadow-lg"
+                            style={{ textShadow: '0 0 12px rgba(255,200,0,0.9)' }}>
+                            GAGNÉ !
+                          </span>
+                        </motion.div>
+                      )}
+                      {showResultBadge && !opponentWon && (
+                        <motion.div
+                          className="absolute inset-0 flex items-center justify-center rounded-2xl bg-black/30"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.25 }}
+                        >
+                          <span className="text-gray-400 font-bold text-lg leading-tight text-center">
+                            PERDU
+                          </span>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
                   <span
                     className={`text-xs font-semibold ${opponentWon ? 'text-yellow-400' : 'text-green-300'}`}
                   >
@@ -303,7 +345,38 @@ export default function GameTable() {
                 <span className="text-white text-xl font-bold mb-5">VS</span>
 
                 <div className="flex flex-col items-center gap-1">
-                  <FlippingCard key={`me-${flipKey}`} card={myCard} highlight={iWon} delay={0.1} />
+                  <div className="relative">
+                    <FlippingCard key={`me-${flipKey}`} card={myCard} highlight={iWon} delay={0.1} />
+                    <AnimatePresence>
+                      {showResultBadge && iWon && (
+                        <motion.div
+                          className="absolute inset-0 flex items-center justify-center rounded-2xl bg-yellow-400/20"
+                          initial={{ opacity: 0, scale: 0.5 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.25, ease: 'backOut' }}
+                        >
+                          <span className="text-yellow-300 font-black text-lg leading-tight text-center drop-shadow-lg"
+                            style={{ textShadow: '0 0 12px rgba(255,200,0,0.9)' }}>
+                            GAGNÉ !
+                          </span>
+                        </motion.div>
+                      )}
+                      {showResultBadge && !iWon && (
+                        <motion.div
+                          className="absolute inset-0 flex items-center justify-center rounded-2xl bg-black/30"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.25 }}
+                        >
+                          <span className="text-gray-400 font-bold text-lg leading-tight text-center">
+                            PERDU
+                          </span>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
                   <span
                     className={`text-xs font-semibold ${iWon ? 'text-yellow-400' : 'text-green-300'}`}
                   >

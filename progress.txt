@@ -142,6 +142,19 @@
 **Build :** `vite build` ✓ (464 modules, 0 erreurs)
 **Tests :** 18/18 ✓
 
+## Session 14 — 2026-03-08
+
+### Task: Phase 5 — Message de résultat clair sur les cartes avant le slide
+
+**Réalisé :**
+- `src/components/GameTable.jsx` : ajout du state `showResultBadge` — après la fin du flip (~700 ms), un badge animé apparaît en overlay sur chaque carte : "GAGNÉ !" (jaune avec glow) sur la carte gagnante, "PERDU" (gris semi-transparent) sur la carte perdante.
+- Le badge est rendu via `<AnimatePresence>` avec animation `scale 0.5→1` + `backOut` pour l'entrée, fade-out à la sortie.
+- Le délai du slide est étendu de 750 ms à 1500 ms (constante `SLIDE_DELAY`) pour laisser ~800 ms de visibilité au badge après le flip.
+- `showResultBadge` est réinitialisé à `false` au début de chaque nouveau `lastResult` et quand le slide commence.
+
+**Build :** `vite build` ✓ (464 modules, 0 erreurs)
+**Tests :** 18/18 ✓
+
 ## Session 13 — 2026-03-08
 
 ### Task: Phase 5 — Historique des 5 derniers tours (bandeau latéral)
