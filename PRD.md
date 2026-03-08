@@ -73,13 +73,13 @@ Quand les deux cartes retournées ont la **même valeur** :
 
 ## Phase 3 : Frontend — Table de jeu
 
-- [ ] Créer le composant `GameTable.jsx` : layout principal de la table de jeu
-- [ ] Afficher la pile du joueur local en bas de l'écran (carte du dessus face cachée + compteur de cartes)
-- [ ] Afficher la pile de l'adversaire en haut de l'écran (carte du dessus face cachée + compteur de cartes)
-- [ ] Afficher la zone centrale pour les cartes jouées (cartes retournées face visible)
-- [ ] Créer le composant `Card.jsx` : rendu visuel d'une carte (valeur + couleur + suit symbol) avec face cachée / face visible
-- [ ] Les cartes rouges (♥ ♦) s'affichent en rouge, les cartes noires (♠ ♣) en noir/blanc
-- [ ] Bouton "Retourner" pour le joueur local, désactivé si déjà cliqué ce tour
+- [x] Créer le composant `GameTable.jsx` : layout principal de la table de jeu
+- [x] Afficher la pile du joueur local en bas de l'écran (carte du dessus face cachée + compteur de cartes)
+- [x] Afficher la pile de l'adversaire en haut de l'écran (carte du dessus face cachée + compteur de cartes)
+- [x] Afficher la zone centrale pour les cartes jouées (cartes retournées face visible)
+- [x] Créer le composant `Card.jsx` : rendu visuel d'une carte (valeur + couleur + suit symbol) avec face cachée / face visible
+- [x] Les cartes rouges (♥ ♦) s'affichent en rouge, les cartes noires (♠ ♣) en noir/blanc
+- [x] Bouton "Retourner" pour le joueur local, désactivé si déjà cliqué ce tour
 
 ## Phase 4 : Frontend — Animations
 

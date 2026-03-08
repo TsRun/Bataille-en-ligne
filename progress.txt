@@ -38,3 +38,15 @@
 - `src/App.jsx` : routing basé sur `state.screen` (home → waiting → game/over), wrappé dans `<GameProvider>`
 
 **Build :** `vite build` ✓ (462 modules, 0 erreurs)
+
+## Session 4 — 2026-03-08
+
+### Task: Phase 3 — Table de jeu
+
+**Réalisé :**
+- `src/components/Card.jsx` : composant carte avec face visible (valeur + suit + couleur rouge/noir) et face cachée (dos bleu décoratif), prop `highlight` pour bordure dorée du vainqueur
+- `src/components/GameTable.jsx` : layout vertical complet — adversaire (haut), zone centrale (milieu), joueur local (bas). Affiche le résultat du dernier tour (cartes face visible, "🏆" et label du vainqueur, "⚔ BATAILLE !" si applicable, +N cartes si bataille). Indicateur animé "Prêt !" quand l'adversaire a cliqué. Bouton "Retourner" désactivé si déjà cliqué ce tour.
+- `src/context/GameContext.jsx` : ajout de `lastResult` (card1, card2, winnerId, cardsWon, event) stocké après chaque tour résolu, `myFlipped` (true après flipCard, false après game_state), passage de card1/card2/winnerId/cardsWon dans l'action GAME_STATE
+- `src/screens/GameScreen.jsx` : remplace le placeholder par `<GameTable />`, conserve l'écran de fin (victoire/défaite)
+
+**Build :** `vite build` ✓ (464 modules, 0 erreurs)

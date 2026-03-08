@@ -10,6 +10,8 @@ const initialState = {
   myName: '',
   gameState: null,
   lastEvent: null,
+  lastResult: null, // { card1, card2, winnerId, cardsWon, event }
+  myFlipped: false,
   opponentReady: false,
   error: null,
 }
@@ -32,16 +34,23 @@ function reducer(state, action) {
     case 'GAME_STATE': {
       const phase = action.gameState.phase
       const newScreen = phase === 'waiting' ? 'waiting' : phase === 'over' ? 'over' : 'game'
+      const lastResult = action.card1
+        ? { card1: action.card1, card2: action.card2, winnerId: action.winnerId, cardsWon: action.cardsWon, event: action.event }
+        : state.lastResult
       return {
         ...state,
         screen: newScreen,
         myId: action.myId || state.myId,
         gameState: action.gameState,
         lastEvent: action.event,
+        lastResult,
+        myFlipped: false,
         opponentReady: false,
         error: null,
       }
     }
+    case 'MY_FLIPPED':
+      return { ...state, myFlipped: true }
     case 'GAME_OVER':
       return {
         ...state,
@@ -75,8 +84,8 @@ export function GameProvider({ children }) {
       dispatch({ type: 'ROOM_CREATED', roomId, gameState, myId: socket.id })
     })
 
-    socket.on('game_state', ({ gameState, event }) => {
-      dispatch({ type: 'GAME_STATE', gameState, event, myId: socket.id })
+    socket.on('game_state', ({ gameState, event, card1, card2, winnerId, cardsWon }) => {
+      dispatch({ type: 'GAME_STATE', gameState, event, card1, card2, winnerId, cardsWon, myId: socket.id })
     })
 
     socket.on('game_over', ({ gameState }) => {
@@ -116,6 +125,7 @@ export function GameProvider({ children }) {
 
   const flipCard = () => {
     socket.emit('player_ready')
+    dispatch({ type: 'MY_FLIPPED' })
   }
 
   const reset = () => {
