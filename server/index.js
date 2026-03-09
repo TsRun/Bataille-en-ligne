@@ -169,7 +169,7 @@ app.get('/health', (req, res) => res.json({ status: 'ok' }));
 
 if (isProd) {
   const distPath = path.join(__dirname, '..', 'client', 'dist');
-  app.get('*', (req, res) => {
+  app.get('{*path}', (req, res) => {
     res.sendFile(path.join(distPath, 'index.html'));
   });
 }
