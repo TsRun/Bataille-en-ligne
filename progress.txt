@@ -197,6 +197,18 @@
 **Build :** `vite build` ✓ (464 modules, 0 erreurs)
 **Tests :** 18/18 ✓
 
+## Session 21 — 2026-03-09
+
+### Task: Phase 6 — Dockerfile et docker-compose.yml
+
+**Réalisé :**
+- `Dockerfile` : build multi-stage — stage `builder` installe les dépendances client et build (`vite build`), stage final `node:20-alpine` copie le dist client + installe les dépendances serveur (prod only), expose le port 3000, démarre avec `node server/index.js` en `NODE_ENV=production`.
+- `docker-compose.yml` : service unique `bataille`, build depuis le Dockerfile, publie le port `3000:3000`, `restart: unless-stopped`.
+
+**Usage :** `docker-compose up --build` pour lancer le tout.
+
+---
+
 ## Session 20 — 2026-03-09
 
 ### Task: Phase 6 — Script `build` à la racine
