@@ -215,3 +215,14 @@
 
 **Build :** `vite build` ✓ (464 modules, 0 erreurs)
 **Tests :** 18/18 ✓
+
+## Session 19 — 2026-03-09
+
+### Task: Phase 6 — Servir les fichiers statiques du client depuis Express en production
+
+**Réalisé :**
+- `server/index.js` : en mode `NODE_ENV=production`, Express sert les fichiers statiques depuis `../client/dist` et ajoute un fallback SPA (`app.get('*', ...)` → `index.html`). En développement, le comportement CORS existant est conservé. Port par défaut : 3000 en production, 3001 en dev.
+- `client/src/socket.js` : la socket se connecte à `''` (même origin) en production (`import.meta.env.PROD`) et à `http://localhost:3001` en développement.
+
+**Build :** `vite build` ✓ (464 modules, 0 erreurs)
+**Tests :** 18/18 ✓

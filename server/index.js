@@ -2,16 +2,24 @@
 
 const express = require('express');
 const http = require('http');
+const path = require('path');
 const { Server } = require('socket.io');
 const cors = require('cors');
 const { createGame, addPlayer, playerFlip, serializeState, removePlayer, restartGame } = require('./src/game');
 
 const app = express();
-app.use(cors());
+const isProd = process.env.NODE_ENV === 'production';
+
+if (isProd) {
+  const distPath = path.join(__dirname, '..', 'client', 'dist');
+  app.use(express.static(distPath));
+} else {
+  app.use(cors());
+}
 app.use(express.json());
 
 const server = http.createServer(app);
-const io = new Server(server, {
+const io = new Server(server, isProd ? {} : {
   cors: {
     origin: '*',
     methods: ['GET', 'POST'],
@@ -159,7 +167,14 @@ io.on('connection', (socket) => {
 
 app.get('/health', (req, res) => res.json({ status: 'ok' }));
 
-const PORT = process.env.PORT || 3001;
+if (isProd) {
+  const distPath = path.join(__dirname, '..', 'client', 'dist');
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(distPath, 'index.html'));
+  });
+}
+
+const PORT = process.env.PORT || (isProd ? 3000 : 3001);
 server.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
