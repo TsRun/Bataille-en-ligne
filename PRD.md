@@ -110,7 +110,7 @@ Quand les deux cartes retournées ont la **même valeur** :
 ## Phase 6 : Build et mise en ligne
 
 - [x] Configurer Express pour servir les fichiers statiques de `/client/dist` en production (même port pour Socket.io + frontend)
-- [ ] Ajouter un script `build` à la racine : build le client (`vite build`) puis démarre le serveur en mode production
+- [x] Ajouter un script `build` à la racine : build le client (`vite build`) puis démarre le serveur en mode production
 - [ ] Créer un `Dockerfile` à la racine : installe les dépendances, build le client, expose le port 3000, démarre le serveur
 - [ ] Créer un `docker-compose.yml` pour lancer le tout avec `docker-compose up`
 - [ ] Ajouter une section "Jouer avec un ami" dans le `README.md` avec 3 options :

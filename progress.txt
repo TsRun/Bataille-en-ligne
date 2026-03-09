@@ -197,6 +197,16 @@
 **Build :** `vite build` ✓ (464 modules, 0 erreurs)
 **Tests :** 18/18 ✓
 
+## Session 20 — 2026-03-09
+
+### Task: Phase 6 — Script `build` à la racine
+
+**Réalisé :**
+- `package.json` (racine) : créé avec les scripts `build` (installe les dépendances client + `vite build`) et `start` (`NODE_ENV=production node server/index.js`). Scripts utilitaires `install:all`, `dev:server`, `dev:client` inclus.
+
+**Build :** `npm run build` ✓ (464 modules, 0 erreurs)
+**Tests :** 18/18 ✓
+
 ## Session 17 — 2026-03-08
 
 ### Task: Phase 5 — README.md avec instructions de lancement
