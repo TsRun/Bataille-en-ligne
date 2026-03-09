@@ -113,7 +113,7 @@ Quand les deux cartes retournées ont la **même valeur** :
 - [x] Ajouter un script `build` à la racine : build le client (`vite build`) puis démarre le serveur en mode production
 - [x] Créer un `Dockerfile` à la racine : installe les dépendances, build le client, expose le port 3000, démarre le serveur
 - [x] Créer un `docker-compose.yml` pour lancer le tout avec `docker-compose up`
-- [ ] Ajouter une section "Jouer avec un ami" dans le `README.md` avec 3 options :
+- [x] Ajouter une section "Jouer avec un ami" dans le `README.md` avec 3 options :
   - **Option A - Render.com (gratuit)** : instructions pas-à-pas pour déployer le repo (build command, start command, port)
   - **Option B - Docker VPS** : `docker-compose up -d` sur n'importe quel VPS avec Docker
   - **Option C - ngrok local** : `ngrok http 3000` pour partager sa machine locale sans serveur

@@ -197,6 +197,18 @@
 **Build :** `vite build` ✓ (464 modules, 0 erreurs)
 **Tests :** 18/18 ✓
 
+## Session 22 — 2026-03-09
+
+### Task: Phase 6 — Section "Jouer avec un ami" dans README.md
+
+**Réalisé :**
+- `README.md` : ajout de la section "Jouer avec un ami" avec 3 options :
+  - **Option A - Render.com** : instructions pour déployer via le repo GitHub (build command `npm run build`, start command `npm start`, variable `NODE_ENV=production`)
+  - **Option B - Docker VPS** : `docker-compose up -d` sur tout VPS avec Docker
+  - **Option C - ngrok** : `npm start` + `ngrok http 3000` pour partager sa machine locale sans serveur
+
+---
+
 ## Session 21 — 2026-03-09
 
 ### Task: Phase 6 — Dockerfile et docker-compose.yml
