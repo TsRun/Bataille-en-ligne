@@ -1,5 +1,6 @@
 import { GameProvider, useGame } from './context/GameContext'
 import HomeScreen from './screens/HomeScreen'
+import JoinScreen from './screens/JoinScreen'
 import WaitingScreen from './screens/WaitingScreen'
 import GameScreen from './screens/GameScreen'
 
@@ -9,6 +10,8 @@ function Router() {
   switch (state.screen) {
     case 'home':
       return <HomeScreen />
+    case 'join':
+      return <JoinScreen />
     case 'waiting':
       return <WaitingScreen />
     case 'game':

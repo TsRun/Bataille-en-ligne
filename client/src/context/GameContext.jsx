@@ -4,7 +4,7 @@ import socket from '../socket'
 const GameContext = createContext(null)
 
 const initialState = {
-  screen: 'home', // 'home' | 'waiting' | 'game' | 'over'
+  screen: 'home', // 'home' | 'join' | 'waiting' | 'game' | 'over'
   roomId: null,
   myId: null,
   myName: '',
@@ -81,6 +81,8 @@ function reducer(state, action) {
       return { ...state, opponentRestartVoted: true }
     case 'ERROR':
       return { ...state, error: action.message }
+    case 'SET_SCREEN':
+      return { ...state, screen: action.screen, myName: action.name || state.myName, error: null }
     case 'RESET':
       return { ...initialState, history: [], turnCount: 0 }
     default:
@@ -162,8 +164,12 @@ export function GameProvider({ children }) {
     dispatch({ type: 'RESET' })
   }
 
+  const setScreen = (screen, name) => {
+    dispatch({ type: 'SET_SCREEN', screen, name })
+  }
+
   return (
-    <GameContext.Provider value={{ state, createRoom, joinRoom, flipCard, restartGame, reset }}>
+    <GameContext.Provider value={{ state, createRoom, joinRoom, flipCard, restartGame, reset, setScreen }}>
       {children}
     </GameContext.Provider>
   )
