@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { useGame } from '../context/GameContext'
 
@@ -6,6 +6,12 @@ export default function HomeScreen() {
   const { state, createRoom, joinRoom } = useGame()
   const [name, setName] = useState('')
   const [roomCode, setRoomCode] = useState('')
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search)
+    const room = params.get('room')
+    if (room) setRoomCode(room.toUpperCase())
+  }, [])
 
   const handleCreate = () => {
     if (!name.trim()) return
@@ -17,58 +23,59 @@ export default function HomeScreen() {
     joinRoom(roomCode.trim(), name.trim())
   }
 
-  const handleKeyDown = (e) => {
-    if (e.key === 'Enter') handleCreate()
-  }
-
   return (
-    <div className="min-h-screen bg-green-900 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-950 flex items-center justify-center p-4">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4 }}
-        className="bg-green-800 rounded-2xl p-8 w-full max-w-sm shadow-2xl"
+        className="w-full max-w-xs flex flex-col gap-4"
       >
-        <h1 className="text-white text-5xl font-bold text-center mb-1">Bataille</h1>
-        <p className="text-green-300 text-center text-sm mb-8">Jeu de cartes multijoueur</p>
+        <h1 className="text-white text-4xl font-bold text-center mb-2">Bataille</h1>
 
-        <div className="mb-6">
-          <label className="text-green-200 text-sm mb-1 block">Votre nom</label>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder="Entrez votre nom"
-            className="w-full px-4 py-2 rounded-lg bg-green-700 text-white placeholder-green-400 border border-green-600 focus:outline-none focus:border-green-400"
-            maxLength={20}
-            autoFocus
-          />
-        </div>
+        {/* 1. Pseudo */}
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          onKeyDown={(e) => e.key === 'Enter' && handleCreate()}
+          placeholder="Ton pseudo"
+          className="w-full px-4 py-3 rounded-lg bg-gray-800 text-white placeholder-gray-500 border border-gray-700 focus:outline-none focus:border-gray-400"
+          maxLength={20}
+          autoFocus
+        />
 
+        {/* 2. Créer */}
         <button
           onClick={handleCreate}
           disabled={!name.trim()}
-          className="w-full py-3 bg-yellow-500 hover:bg-yellow-400 disabled:bg-gray-600 disabled:cursor-not-allowed text-gray-900 font-bold rounded-lg transition-colors mb-6"
+          className="w-full py-3 bg-yellow-500 hover:bg-yellow-400 disabled:bg-gray-700 disabled:cursor-not-allowed text-gray-900 font-bold rounded-lg transition-colors"
         >
           Créer une partie
         </button>
 
-        <div className="border-t border-green-600 pt-6">
-          <p className="text-green-400 text-xs text-center mb-3">— ou rejoindre —</p>
+        {/* 3. Séparateur */}
+        <div className="flex items-center gap-3">
+          <div className="flex-1 h-px bg-gray-700" />
+          <span className="text-gray-500 text-sm">ou</span>
+          <div className="flex-1 h-px bg-gray-700" />
+        </div>
+
+        {/* 4. Code + Rejoindre sur la même ligne */}
+        <div className="flex gap-2">
           <input
             type="text"
             value={roomCode}
             onChange={(e) => setRoomCode(e.target.value.toUpperCase())}
             onKeyDown={(e) => e.key === 'Enter' && handleJoin()}
-            placeholder="CODE"
-            className="w-full px-4 py-2 rounded-lg bg-green-700 text-white placeholder-green-500 border border-green-600 focus:outline-none focus:border-green-400 mb-3 text-center tracking-widest font-mono text-lg"
+            placeholder="Code de la partie"
+            className="flex-1 min-w-0 px-4 py-3 rounded-lg bg-gray-800 text-white placeholder-gray-500 border border-gray-700 focus:outline-none focus:border-gray-400 font-mono tracking-widest"
             maxLength={6}
           />
           <button
             onClick={handleJoin}
             disabled={!name.trim() || roomCode.length < 4}
-            className="w-full py-3 bg-blue-600 hover:bg-blue-500 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-bold rounded-lg transition-colors"
+            className="px-4 py-3 bg-blue-600 hover:bg-blue-500 disabled:bg-gray-700 disabled:cursor-not-allowed text-white font-bold rounded-lg transition-colors whitespace-nowrap"
           >
             Rejoindre
           </button>
@@ -78,7 +85,7 @@ export default function HomeScreen() {
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="mt-4 text-red-400 text-sm text-center"
+            className="text-red-400 text-sm text-center"
           >
             {state.error}
           </motion.p>

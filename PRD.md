@@ -70,6 +70,13 @@ Quand les deux cartes retournées ont la **même valeur** :
 - [x] Créer le store d'état global du jeu (React Context ou Zustand) pour stocker l'état reçu du serveur
 - [x] Afficher un lien/code partageable après création de la room (copie en un clic)
 - [x] Afficher un écran d'attente animé tant que le deuxième joueur n'a pas rejoint
+- [x] Refaire l'UI de `HomeScreen.jsx` — garder la logique existante, changer uniquement le visuel avec exactement ces éléments dans cet ordre :
+  1. Champ texte "Ton pseudo" en premier (obligatoire, max 20 caractères) — boutons désactivés si pseudo vide
+  2. Bouton "Créer une partie"
+  3. Séparateur "ou" centré
+  4. Champ "Code de la partie" + bouton "Rejoindre" sur la même ligne
+  - Design épuré, centré verticalement, fond sombre, aucun autre élément superflu
+  - Si l'URL contient `?room=`, pré-remplir le champ code automatiquement
 
 ## Phase 3 : Frontend — Table de jeu
 
@@ -99,3 +106,14 @@ Quand les deux cartes retournées ont la **même valeur** :
 - [x] Responsive design : fonctionne sur mobile et desktop
 - [x] Ajouter un bouton "Rejouer" sur l'écran de fin qui relance une nouvelle partie dans la même room
 - [x] Créer un `README.md` avec les instructions de lancement (`npm run dev` client + server)
+
+## Phase 6 : Build et mise en ligne
+
+- [ ] Configurer Express pour servir les fichiers statiques de `/client/dist` en production (même port pour Socket.io + frontend)
+- [ ] Ajouter un script `build` à la racine : build le client (`vite build`) puis démarre le serveur en mode production
+- [ ] Créer un `Dockerfile` à la racine : installe les dépendances, build le client, expose le port 3000, démarre le serveur
+- [ ] Créer un `docker-compose.yml` pour lancer le tout avec `docker-compose up`
+- [ ] Ajouter une section "Jouer avec un ami" dans le `README.md` avec 3 options :
+  - **Option A - Render.com (gratuit)** : instructions pas-à-pas pour déployer le repo (build command, start command, port)
+  - **Option B - Docker VPS** : `docker-compose up -d` sur n'importe quel VPS avec Docker
+  - **Option C - ngrok local** : `ngrok http 3000` pour partager sa machine locale sans serveur

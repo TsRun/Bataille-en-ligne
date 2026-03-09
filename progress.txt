@@ -205,3 +205,13 @@
 - `README.md` : créé à la racine du projet avec stack technique, prérequis, instructions de lancement en 2 étapes (serveur sur :3001, client sur :5173), instructions de jeu (créer/rejoindre une room), et commande `npm test` pour les tests backend.
 
 **Tests :** 18/18 ✓
+
+## Session 18 — 2026-03-09
+
+### Task: Phase 2 — Refonte UI HomeScreen.jsx
+
+**Réalisé :**
+- `src/screens/HomeScreen.jsx` : refonte complète du visuel — fond `bg-gray-950`, layout `flex-col gap-4` sans carte/cadre. Ordre exact : 1) champ "Ton pseudo" (max 20 car., boutons désactivés si vide), 2) bouton "Créer une partie", 3) séparateur "ou" centré, 4) champ "Code de la partie" + bouton "Rejoindre" sur la même ligne. Pre-remplissage automatique du code si `?room=` présent dans l'URL. Toute la logique existante conservée.
+
+**Build :** `vite build` ✓ (464 modules, 0 erreurs)
+**Tests :** 18/18 ✓
